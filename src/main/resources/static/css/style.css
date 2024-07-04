@@ -1,0 +1,270 @@
+.banner {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)),
+		url('/images/contact_manager.png'); /* Path to your image */
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 100vh;
+	/* Create a semi-transparent overlay */
+	position: relative;
+	color: white;
+	height: 100vh;
+	/* Create a semi-transparent overlay */
+	position: relative;
+}
+
+.bg-primary {
+	background: #0080ff !important
+}
+
+a {
+	text-decoration: none !important;
+}
+
+h1, h2, h3 {
+	font-family: Arial, sans-serif;
+}
+
+.myform {
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 1rem;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	width: 100%;
+	pointer-events: auto;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 1.1rem;
+	outline: 0;
+	max-width: 500px;
+}
+
+.tx-tfm {
+	text-transform: uppercase;
+}
+
+.mybtn {
+	border-radius: 50px;
+}
+
+.login-or {
+	position: relative;
+	color: #aaa;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.span-or {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: -2px;
+	margin-left: -25px;
+	background-color: #fff;
+	width: 50px;
+	text-align: center;
+}
+
+.hr-or {
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+form .error {
+	color: #ff0000;
+}
+
+#second {
+	display: none;
+}
+/* for mobile view */
+@media only screen and(max-width: 600px) {
+	.side-bar {
+		display: none;
+		width: 80% !important;
+		background: #c0c0c0;
+		height: 100vh;
+		position: fixed;
+		padding-top: 20px;
+	}
+	.content {
+		margin-left: 0% !important;
+	}
+}
+
+.side-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 22%;
+	background-color: #f8f9fa;
+	border-right: 1px solid #dee2e6;
+	padding: 10px;
+	display: none;
+	transition: all 0.3s;
+	z-index: 99999999999999999999999;
+}
+
+.side-bar.visible {
+	display: block;
+}
+
+.side-bar .item {
+	display: block;
+	padding: 10px;
+	margin-bottom: 10px;
+	color: #333;
+	text-decoration: none;
+	border-radius: 5px;
+	transition: all 0.3s;
+}
+
+.side-bar .item:hover {
+	background-color: #007bff;
+	color: white;
+}
+
+.side-bar .close-button {
+	font-size: 24px;
+	cursor: pointer;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.content {
+	margin-left: 0;
+	transition: all 0.3s;
+}
+
+.material-symbols-outlined {
+	cursor: pointer;
+}
+
+#description {
+	border: 1px solid #ccc;
+	min-height: 200px;
+	padding: 10px;
+}
+
+.style_profile_pic {
+	width: 35px;
+	height: 35px;
+	object-fit: cover;
+	border-radius: 50%; /* Makes the image circular */
+	border: 2px solid #ccc; /* Adds a light grey border */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+	transition: transform 0.2s, box-shadow 0.2s;
+	/* Adds smooth transition for hover effects */
+}
+
+.style_profile_pic:hover {
+	transform: scale(1.05); /* Slightly enlarges the image on hover */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	/* Intensifies the shadow on hover */
+}
+/*  */
+.gradient-custom {
+	/* fallback for old browsers */
+	background: #f6d365;
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1),
+		rgba(253, 160, 133, 1));
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: linear-gradient(to right bottom, rgba(246, 211, 101, 1),
+		rgba(253, 160, 133, 1))
+}
+
+.img-fluid {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 50%; /* Makes the image circular */
+	border: 2px solid #ccc; /* Adds a light grey border */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+	transition: transform 0.2s, box-shadow 0.2s;
+	/* Adds smooth transition for hover effects */
+}
+
+.img-fluid:hover {
+	transform: scale(1.05); /* Slightly enlarges the image on hover */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	/* Intensifies the shadow on hover */
+}
+
+.profile-card {
+	margin-top: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-img {
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.profile-info h4 {
+	margin-top: 20px;
+}
+
+.table th, .table td {
+	vertical-align: middle;
+}
+
+.description {
+	margin-top: 20px;
+	padding: 10px;
+	border-top: 1px solid #ddd;
+}
+
+/* Basic table styling */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+/* Table header styling */
+.thead-light th {
+	background-color: #f8f9fa;
+	color: #333;
+	padding: 12px;
+	text-align: left;
+	border-bottom: 2px solid #ddd;
+}
+
+/* Table body row styling */
+tbody tr:nth-child(odd) {
+	background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+}
+
+/* Table cell styling */
+tbody th, tbody td {
+	padding: 12px;
+	border-bottom: 1px solid #ddd;
+}
+
+/* Hover effect for table rows */
+tbody tr:hover {
+	background-color: #c0c0c0;
+}
+
+/* Add margin top */
+.mt-4 {
+	margin-top: 1.5rem;
+}
+
+

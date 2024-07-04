@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{User/base::layout(~{::div})}">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card profile-card col-md-8 offset-md-2" th:if="${contact}">
+            <div class="card-body text-center">
+                <img class="profile-img" src="" th:src="@{'/images/' + ${contact.image}}" alt="profilePhoto" />
+                <div class="profile-info mt-4">
+                    <h4>
+                        <span th:text="${contact.contact_name}"></span> 
+                        <small>(<span th:text="${contact.nickname}"></span>)</small>
+                    </h4>
+                </div>
+                <table class="table mt-4">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Contact ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Designation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" th:text="${contact.contact_id}"></th>
+                            <td th:text="${contact.contact_name}"></td>
+                            <td th:text="${contact.email}"></td>
+                            <td th:text="${contact.contact_number}"></td>
+                            <td th:text="${contact.contact_designation}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="description">
+                    <h5>Description</h5>
+                    <span th:utext="${contact.description}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center" th:unless="${contact}">
+    	<h1>Sorry!! You don't have permission to visit this page!!</h1>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{User/base::layout(~{::div})}">
+<head>
+	<meta charset="UTF-8" />
+	<title>Dashboard</title>
+</head>
+<body>
+	<div>
+		<h1 class="text-center">Hello <span th:text="${user.name}"></span> !!</h1>
+	</div>	
+</body>
+</html>

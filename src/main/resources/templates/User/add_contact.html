@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{User/base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Dashboard</title>
+</head>
+<body>
+	<div>
+		<section>
+			<div class="card">
+				<div class="card-body">
+					<h1 class="text-center">Add your contact details</h1>
+					<!-- Start of Alert messages -->
+					<div th:if="${message}"
+						class="container col-md-8 offset-md-2">
+						<div th:classappend="${'alert-'+message.type}"
+							class="alert text-center" role="alert">
+							<div th:text=${message.content}></div>
+						</div>
+					</div>
+					<!-- End of Alert messages -->
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-8 offset-md-2">
+								<form action="#" th:object="${contact}"
+									enctype="multipart/form-data" method="POST"
+									th:action="@{/user/process-contact}" class="mt-2">
+
+									<!-- First Name -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Username</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">😀</div>
+											</div>
+											<input type="text" class="form-control" name="contact_name"
+												id="inlineFormInputGroup" placeholder="Username" required="">
+										</div>
+									</div>
+
+									<!-- Nickname -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Nickname</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">😎</div>
+											</div>
+											<input type="text" class="form-control" name="nickname"
+												id="inlineFormInputGroup" placeholder="Nickname" required="">
+										</div>
+									</div>
+
+									<!-- Email -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Email</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">📧</div>
+											</div>
+											<input type="text" class="form-control" name="email"
+												id="inlineFormInputGroup" placeholder="Email" required="">
+										</div>
+									</div>
+
+									<!-- Contact Number -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Contact
+											Number</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">☎</div>
+											</div>
+											<input type="text" class="form-control" name="contact_number"
+												id="inlineFormInputGroup" placeholder="Contact Number"
+												required="" max="10">
+										</div>
+									</div>
+
+									<!-- Designation -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Designation</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">🏠</div>
+											</div>
+											<input type="text" class="form-control"
+												name="contact_designation" id="inlineFormInputGroup"
+												placeholder="Designation" required="">
+										</div>
+									</div>
+
+									<!-- About Section -->
+									<div class="form-group mt-3">
+										<textarea name="description" id="description" rows="10"
+											class="form-control" placeholder="Enter contact description"></textarea>
+									</div>
+
+									<!-- Contact's Image -->
+									<div class="col-auto">
+										<label class="sr-only" for="inlineFormInputGroup">Image</label>
+										<div class="input-group mb-2">
+											<div class="input-group-prepend">
+												<div class="input-group-text">🏞</div>
+											</div>
+											<input type="file" class="form-control" name="profileImage"
+												id="inlineFormInputGroup" placeholder="Image">
+										</div>
+									</div>
+									<!-- Success Button -->
+									<div class="container text-center">
+										<button type="submit" class="btn btn-outline-primary">Save
+											Contact</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>
