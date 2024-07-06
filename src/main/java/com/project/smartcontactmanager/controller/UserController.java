@@ -8,7 +8,10 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+import org.apache.logging.log4j.message.StringFormattedMessage;
+import org.springframework.aot.hint.support.FilePatternResourceHintsRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -65,6 +68,7 @@ public class UserController {
 		return "User/add_contact";
 	}
 
+	// Add contacts
 	@PostMapping("/process-contact")
 	public String processContact(@Valid @ModelAttribute Contact contact,
 			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model) {
@@ -72,19 +76,31 @@ public class UserController {
 			String name = principal.getName();
 			User user = userRepository.getUserByUserName(name);
 			contact.setUser(user);
+			
+			//setting the unique name of image
+			String uniqueID = UUID.randomUUID().toString();
 
 			// Upload file in image column
 			if (multipartFile.isEmpty()) {
 				System.out.println("File is empty");
 				contact.setImage("person.png");
 			} else {
-				contact.setImage(multipartFile.getOriginalFilename());
+				//setting the new name of image
+				String oldFileName = multipartFile.getOriginalFilename();
+				String extension = oldFileName.substring(oldFileName.lastIndexOf("."));
+				String newFileName = uniqueID +"_"+oldFileName;
+				System.out.println("NEW FILE NAME: "+newFileName+" EXTENSION: "+extension);
+				
+				// update new image
+				contact.setImage(newFileName);
+
 				File saveFile = new ClassPathResource("static/images").getFile();
 				Path path = Paths
-						.get(saveFile.getAbsolutePath() + File.separator + multipartFile.getOriginalFilename());
+						.get(saveFile.getAbsolutePath() + File.separator + newFileName);
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			}
-			contactRepository.save(contact);//need to first save the contact before user
+
+			contactRepository.save(contact);// need to first save the contact before user
 			user.getContactList().add(contact);
 			System.out.println(user.getName() + " " + user.getRole() + " " + user.getContactList());
 			userRepository.save(user);
@@ -124,38 +140,101 @@ public class UserController {
 
 	// show individual contacts
 	@GetMapping("/contact/{cId}")
-	public String show_individual_contacts(@PathVariable("cId") Integer cId, 
-			Model model, Principal principal) {
+	public String show_individual_contacts(@PathVariable("cId") Integer cId, Model model, Principal principal) {
 		Optional<Contact> contactOptional = contactRepository.findById(cId);
-		Contact contact = contactOptional.get();//get the contact details
-		
+		Contact contact = contactOptional.get();// get the contact details
+
 		String userName = principal.getName();
-		User user = userRepository.getUserByUserName(userName);//to get the user
-		
-		//No other user access the contacts details
-		if(user.getId() == contact.getUser().getId())
-			model.addAttribute("contact", contact);//render the contact on page
-		
+		User user = userRepository.getUserByUserName(userName);// to get the user
+
+		// No other user access the contacts details
+		if (user.getId() == contact.getUser().getId())
+			model.addAttribute("contact", contact);// render the contact on page
+
 		return "User/show_individual_contact";
 	}
-	
-	//delete individual contacts
+
+	// delete individual contacts
 	@GetMapping("/delete-contact/{ID}")
-	public String deleteContact(@PathVariable("ID") Integer id, 
-			Model model, Principal principal) {
+	public String deleteContact(@PathVariable("ID") Integer id, Model model, Principal principal,
+			HttpSession httpSession) {
 		System.out.println(id);
-		Contact contact = contactRepository.findById(id).get();//get the contact details
-		
+		Contact contact = contactRepository.findById(id).get();// get the contact details
+
 		String userName = principal.getName();
-		User user = userRepository.getUserByUserName(userName);//to get the user
-		
-		if(user.getId() == contact.getUser().getId()) {
-			contact.setUser(null);//first de-link the user
+		User user = userRepository.getUserByUserName(userName);// to get the user
+
+		if (user.getId() == contact.getUser().getId()) {
+			contact.setUser(null);// first de-link the user
 			System.out.println(contact.toString());
 			contactRepository.delete(contact);
 		}
-			
+
+		httpSession.setAttribute("deleted", new Message("Contact is deleted successfully", "success"));
 		model.addAttribute("deleted", "is deleted successfully");
 		return "redirect:/user/show-contacts/0";
+	}
+
+	// open update contact
+	@PostMapping("/update-contact/{ID}")
+	public String updateContact(@PathVariable("ID") Integer id, Principal principal, Model model) {
+
+		// send the title
+		model.addAttribute("title", "Update the contacts");
+
+		Contact contact = contactRepository.findById(id).get();// get the contact details
+		model.addAttribute("contact", contact);
+
+		return "User/update_contact";
+	}
+
+	// update the contact
+	@PostMapping("/process-update")
+	public String updateContact(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model) {
+		try {
+			//setting the unique name of image
+			String uniqueID = UUID.randomUUID().toString();
+			// fetching oldContactDetails
+			Contact oldContact = contactRepository.findById(contact.getContact_id()).get();
+			// check image
+			if (!multipartFile.isEmpty()) {
+				// delete old image
+				File deleteFile = new ClassPathResource("static/images").getFile();
+				File file = new File(deleteFile, oldContact.getImage());
+				file.delete();
+				
+				//setting the new name of image
+				String oldFileName = multipartFile.getOriginalFilename();
+				String extension = oldFileName.substring(oldFileName.lastIndexOf("."));
+				String newFileName = uniqueID +"_"+oldFileName;
+				System.out.println("NEW FILE NAME: "+newFileName+" EXTENSION: "+extension);
+				
+				// update new image
+				contact.setImage(newFileName);
+				File saveFile = new ClassPathResource("static/images").getFile();
+				Path path = Paths
+						.get(saveFile.getAbsolutePath() + File.separator + newFileName);
+				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			} else {
+				contact.setImage(oldContact.getImage());
+			}
+			String userName = principal.getName();
+			User user = userRepository.getUserByUserName(userName);// to get the user
+			contact.setUser(user);
+			contactRepository.save(contact);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+		return "redirect:/user/contact/"+contact.getContact_id();
+	}
+	
+	//User Profile
+	@GetMapping("/profile/{ID}")
+	public String userProfile(@PathVariable("ID") Integer id) {
+		return "User/userProfile";
 	}
 }

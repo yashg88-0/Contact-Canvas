@@ -47,10 +47,10 @@
 				<ul class="navbar-nav ms-auto text-uppercase">
 
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href="@{/}" href="#">Home</a></li>
+						aria-current="page" th:href="@{/user/dashboard}" href="#">Home</a></li>
 
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#" th:text="${user.name}">Home</a></li>
+						aria-current="page" href="#" th:text="${user.name}">Name</a></li>
 
 					<li class="nav-item"><a class="nav-link" th:href="@{/logout}"
 						href="#" tabindex="-1" aria-disabled="true">Logout</a></li>
@@ -66,7 +66,7 @@
 		<span onclick="toggleSideBar()" class="close-button">&times;</span> <a
 			href="#" th:href="@{/user/dashboard}" class="item"> <span
 			class="material-symbols-outlined">home</span> Home
-		</a> <a href="#" class="item"> <span class="material-symbols-outlined">account_circle</span>
+		</a> <a href="#" th:href="@{'/user/profile'+}" class="item"> <span class="material-symbols-outlined">account_circle</span>
 			Profile
 		</a> <a href="#" th:href="@{/user/show-contacts/0}" class="item"> <span
 			class="material-symbols-outlined">contacts</span> View Your Contacts
@@ -91,6 +91,7 @@
 
 	<!-- Custom JS -->
 	<script type="text/javascript" th:src="@{/js/script.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

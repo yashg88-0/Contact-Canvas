@@ -33,12 +33,17 @@
 								th:text="${c.contact_name}"></span></a></td>
 						<td><span th:text="${c.email}"></span></td>
 						<td th:text="${c.contact_number}"></td>
-						<td><a th:href="@{'/user/delete-contact/'+${c.contact_id}}"
-							type="submit" onclick="confirmDelete(event)" class="btn btn-danger btn-sm">DELETE</a> <a
-							type="submit" class="btn btn-primary btn-sm">UPDATE</a></td>
+						<td>
+							<a href="#" th:onclick="'confirmDelete(' + ${c.contact_id} + ')'"
+							type="submit" class="btn btn-danger btn-sm">DELETE</a>
+							<form method="POST" th:action="@{'/user/update-contact/'+${c.contact_id}}" class="mt-2"> 
+								<button type="submit" class="btn btn-primary btn-sm">UPDATE</button>
+							</form>
+						</td>
 					</tr>
 				</tbody>
 			</table>
+			<!-- Pagination -->
 			<nav aria-label="Page navigation example">
 				<ul class="pagination">
 					<li th:if="${currentPage != 0}" class="page-item"><a

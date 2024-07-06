@@ -19,6 +19,11 @@
 	background: #0080ff !important
 }
 
+/* .img {
+	position: relative;
+	margin-right: 20px;
+} */
+
 a {
 	text-decoration: none !important;
 }
@@ -183,22 +188,22 @@ form .error {
 		rgba(253, 160, 133, 1))
 }
 
-.img-fluid {
-	width: 100px;
-	height: 100px;
+/* .img-fluid {
+	width: 480px;
+	height: 480px;
 	object-fit: cover;
-	border-radius: 50%; /* Makes the image circular */
-	border: 2px solid #ccc; /* Adds a light grey border */
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+	border-radius: 50%; Makes the image circular
+	border: 2px solid #ccc; Adds a light grey border
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Adds a subtle shadow
 	transition: transform 0.2s, box-shadow 0.2s;
-	/* Adds smooth transition for hover effects */
+	Adds smooth transition for hover effects
 }
 
 .img-fluid:hover {
-	transform: scale(1.05); /* Slightly enlarges the image on hover */
+	transform: scale(1.05); Slightly enlarges the image on hover
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	/* Intensifies the shadow on hover */
-}
+	Intensifies the shadow on hover
+} */
 
 .profile-card {
 	margin-top: 20px;
