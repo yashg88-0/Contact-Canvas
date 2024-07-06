@@ -2,12 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{User/base::layout(~{::div})}">
 <head>
-	<meta charset="UTF-8" />
-	<title>Dashboard</title>
+<meta charset="UTF-8" />
+<title>Dashboard</title>
 </head>
 <body>
-	<div>
-		<h1 class="text-center">Hello <span th:text="${user.name}"></span> !!</h1>
-	</div>	
+	<div class="container">
+		<div class="card profile-card col-md-8 offset-md-2">
+			<div class="card-body text-center">
+				<div class="container">
+					<img class="profile-img" src=""
+						th:src="@{'/images/' + ${user.imageUrl}}" alt="profilePhoto" />
+				</div>
+				<h1 class="text-center">
+					Hello <span th:text="${user.name}"></span> !!
+				</h1>
+				<a href="#" th:href="@{/user/add-contact}" class="btn-add-contact">
+					<i class="fas fa-address-book"></i> Start adding your contacts
+				</a>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

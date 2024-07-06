@@ -1,5 +1,7 @@
 package com.project.smartcontactmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +34,7 @@ public class Contact {
 	}
 	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore //To avoid circular dependency and rest other enteries will be serialize
 	private User user;
 
 	public int getContact_id() {

@@ -18,32 +18,32 @@
 						th:src="@{'/images/' + ${user.imageUrl}}" alt="profilePhoto" />
 				</div>
 				<h1>
-					Hello! <span th:text="${user.name}"></span>
+					<span th:text="${user.name}"></span>
 				</h1>
 				<table class="table mt-4">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">User ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Active</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th style="text-align: left;" scope="row" th:text="${user.id}"></th>
-                            <td style="text-align: left;" th:text="${user.name}"></td>
-                            <td style="text-align: left;" th:text="${user.email}"></td>
-                            <td style="text-align: left;" th:text="${user.role}"></td>
-                            <td style="text-align: left;" th:text="${user.enabled}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="description">
-                    <h5>Description</h5>
-                    <span th:utext="${user.about}"></span>
-                </div>
+					<thead class="thead-light">
+						<tr>
+							<th style="text-align: center;" scope="col">User ID</th>
+							<th style="text-align: center;" scope="col">Name</th>
+							<th style="text-align: center;" scope="col">Email</th>
+							<th style="text-align: center;" scope="col">Role</th>
+							<th style="text-align: center;" scope="col">Active</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th style="text-align: center;" scope="row" th:text="${user.id}"></th>
+							<td style="text-align: center;" th:text="${user.name}"></td>
+							<td style="text-align: center;" th:text="${user.email}"></td>
+							<td style="text-align: center;" th:text="${user.role}"></td>
+							<td style="text-align: center; text-transform: uppercase; color: white; background-color: green;" th:text="${user.enabled}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="description">
+					<h5>Description</h5>
+					<span th:utext="${user.about}"></span>
+				</div>
 			</div>
 		</div>
 	</div>

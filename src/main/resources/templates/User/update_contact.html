@@ -12,8 +12,7 @@
 				<div class="card-body">
 					<h1 class="text-center">Update your contact details</h1>
 					<!-- Start of Alert messages -->
-					<div th:if="${message}"
-						class="container col-md-8 offset-md-2">
+					<div th:if="${message}" class="container col-md-8 offset-md-2">
 						<div th:classappend="${'alert-'+message.type}"
 							class="alert text-center" role="alert">
 							<div th:text=${message.content}></div>
@@ -26,7 +25,8 @@
 								<form action="#" th:object="${contact}"
 									enctype="multipart/form-data" method="POST"
 									th:action="@{/user/process-update}" class="mt-2">
-									<input type="hidden" th:value="${contact.contact_id}" name="contact_id" />
+									<input type="hidden" th:value="${contact.contact_id}"
+										name="contact_id" />
 									<!-- First Name -->
 									<div class="col-auto">
 										<label class="sr-only" for="inlineFormInputGroup">Username</label>
@@ -105,9 +105,10 @@
 									<!-- Show image -->
 									<div class="container">
 										<img style="width: 250px; height: 250px;"
-											class="img-fluid style_profile_pic" src=""
-											th:src="@{'/images/'+${contact.image}}" alt="" /><span>(To
-											change the picture kindly select new photo below)</span>
+											class="img-fluid style_profile_pic mt-3" src=""
+											th:src="@{'/images/'+${contact.image}}" alt="" /><span
+											style="font-weight: bold; font-family: Arial, sans-serif; font-size: 150%">
+											(To change the picture kindly select new photo below)&darr;</span>
 									</div>
 
 									<!-- Contact's Image -->

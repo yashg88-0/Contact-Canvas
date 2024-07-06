@@ -23,7 +23,6 @@
 	position: relative;
 	margin-right: 20px;
 } */
-
 a {
 	text-decoration: none !important;
 }
@@ -204,7 +203,6 @@ form .error {
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	Intensifies the shadow on hover
 } */
-
 .profile-card {
 	margin-top: 20px;
 	border-radius: 10px;
@@ -273,3 +271,79 @@ tbody tr:hover {
 }
 
 
+/* HOME BUTTON */
+.btn-add-contact {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #007bff, #00d4ff);
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-add-contact:hover {
+    background: linear-gradient(45deg, #00d4ff, #007bff);
+    box-shadow: 0 15px 20px rgba(0, 123, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.btn-add-contact:active {
+    background: linear-gradient(45deg, #006bbf, #009bff);
+    box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
+    transform: translateY(0);
+}
+
+.btn-add-contact i {
+    margin-right: 8px;
+}
+
+.btn-add-contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    z-index: 0;
+}
+
+.btn-add-contact:hover::before {
+    width: 400%;
+    height: 400%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-add-contact span {
+    position: relative;
+    z-index: 1;
+}
+
+/* search contacts */
+.search-container{
+	position: relative;
+}
+
+.search-result{
+	position: absolute;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid gray;
+	display: none;
+}
+
+.fa fa-search{
+	
+}

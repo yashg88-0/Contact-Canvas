@@ -14,14 +14,21 @@
 					<div th:text="${deleted}"></div>
 				</div>
 			</th:block>
+			<div class="search-container my-3">
+				<input onkeyup="search()" id="search-input" type="text" class="fa fa-search" aria-hidden="true"
+					placeholder="Search your contacts" />
+					<div class="search-result">
+						<!-- result will show here -->
+					</div>
+			</div>
 			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">#ID</th>
-						<th scope="col">Name</th>
-						<th scope="col">Email</th>
-						<th scope="col">Number</th>
-						<th scope="col">Action</th>
+						<th style="text-align: center;" scope="col">#ID</th>
+						<th style="text-align: center;" scope="col">Name</th>
+						<th style="text-align: center;" scope="col">Email</th>
+						<th style="text-align: center;" scope="col">Number</th>
+						<th style="text-align: center;" scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,13 +40,14 @@
 								th:text="${c.contact_name}"></span></a></td>
 						<td><span th:text="${c.email}"></span></td>
 						<td th:text="${c.contact_number}"></td>
-						<td>
-							<a href="#" th:onclick="'confirmDelete(' + ${c.contact_id} + ')'"
+						<td><a href="#"
+							th:onclick="'confirmDelete(' + ${c.contact_id} + ')'"
 							type="submit" class="btn btn-danger btn-sm">DELETE</a>
-							<form method="POST" th:action="@{'/user/update-contact/'+${c.contact_id}}" class="mt-2"> 
+							<form method="POST"
+								th:action="@{'/user/update-contact/'+${c.contact_id}}"
+								class="mt-2">
 								<button type="submit" class="btn btn-primary btn-sm">UPDATE</button>
-							</form>
-						</td>
+							</form></td>
 					</tr>
 				</tbody>
 			</table>
