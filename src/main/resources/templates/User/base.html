@@ -66,7 +66,7 @@
 		<span onclick="toggleSideBar()" class="close-button">&times;</span> <a
 			href="#" th:href="@{/user/dashboard}" class="item"> <span
 			class="material-symbols-outlined">home</span> Home
-		</a> <a href="#" th:href="@{'/user/profile'+}" class="item"> <span class="material-symbols-outlined">account_circle</span>
+		</a> <a href="#" th:href="@{'/user/profile/'+${user.name}}" class="item"> <span class="material-symbols-outlined">account_circle</span>
 			Profile
 		</a> <a href="#" th:href="@{/user/show-contacts/0}" class="item"> <span
 			class="material-symbols-outlined">contacts</span> View Your Contacts

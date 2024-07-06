@@ -233,8 +233,12 @@ public class UserController {
 	}
 	
 	//User Profile
-	@GetMapping("/profile/{ID}")
-	public String userProfile(@PathVariable("ID") Integer id) {
+	@GetMapping("/profile/{name}")
+	public String userProfile(@PathVariable("name") String name, Model model, Principal principal) {
+		String userName = principal.getName();
+		User user = userRepository.getUserByUserName(userName);
+		model.addAttribute("title", user.getName().trim()+"\'s Profile Page");
+		model.addAttribute("name", user);
 		return "User/userProfile";
 	}
 }

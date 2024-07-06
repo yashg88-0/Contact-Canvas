@@ -1,10 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{User/base::layout(~{::div})}">
 <head>
-	<meta charset="UTF-8" />
-	<title>Document</title>
+<meta charset="UTF-8" />
+<title th:text="${title}"></title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+</style>
 </head>
 <body>
-	<h1>This is user's profile</h1>
+	<div class="container">
+		<div class="card profile-card col-md-8 offset-md-2">
+			<div class="card-body text-center">
+				<div class="container">
+					<img class="profile-img" src=""
+						th:src="@{'/images/' + ${user.imageUrl}}" alt="profilePhoto" />
+				</div>
+				<h1>
+					Hello! <span th:text="${user.name}"></span>
+				</h1>
+				<table class="table mt-4">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">User ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Active</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th style="text-align: left;" scope="row" th:text="${user.id}"></th>
+                            <td style="text-align: left;" th:text="${user.name}"></td>
+                            <td style="text-align: left;" th:text="${user.email}"></td>
+                            <td style="text-align: left;" th:text="${user.role}"></td>
+                            <td style="text-align: left;" th:text="${user.enabled}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="description">
+                    <h5>Description</h5>
+                    <span th:utext="${user.about}"></span>
+                </div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
