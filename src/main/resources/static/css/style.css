@@ -344,6 +344,23 @@ tbody tr:hover {
 	display: none;
 }
 
-.fa fa-search{
-	
+/* .search-result {
+    display: none; Hide by default
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    z-index: 1000;
+    width: 100%;
+    max-height: 400px; Adjust height if necessary
+    overflow-y: auto;
+} */
+
+.list-group-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
 }

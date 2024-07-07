@@ -16,6 +16,10 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 	@Query("from Contact as C where C.user.id=:userId")
 	// current-page and No. of contacts per page
 	public Page<Contact> getContactListByUser(@Param("userId") int id, Pageable pageable);
+	
+	@Query("from Contact as C where C.user.id=:userId")
+	// current-page and No. of contacts per page
+	public List<Contact> getContactListByUser(@Param("userId") int id);
 
 	/*
 	 * Searching Contacts Hibernate JPA will provide custom method just by giving

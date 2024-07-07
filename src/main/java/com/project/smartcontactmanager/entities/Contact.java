@@ -19,7 +19,7 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int contact_id;
 	private String contact_name;
-	@Column(unique = true)
+	@Column(nullable = false)
 	private String contact_number;
 	@Column(unique = true)
 	private String email;

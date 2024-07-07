@@ -71,7 +71,8 @@ public class UserController {
 	// Add contacts
 	@PostMapping("/process-contact")
 	public String processContact(@Valid @ModelAttribute Contact contact,
-			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model) {
+			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model, 
+			@RequestParam("contact_number") String number) {
 		try {
 			String name = principal.getName();
 			User user = userRepository.getUserByUserName(name);
@@ -99,6 +100,16 @@ public class UserController {
 						.get(saveFile.getAbsolutePath() + File.separator + newFileName);
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			}
+			
+			//check for multiple contact
+			List<Contact> contactListByUser = contactRepository.getContactListByUser(user.getId());
+			for(Contact c : contactListByUser) {
+				if(c.getContact_number().equals(number)) {
+					model.addAttribute("con_number", new Message("Number is already exist!!", "danger"));
+					return "User/add_contact";
+				}
+			}
+
 
 			contactRepository.save(contact);// need to first save the contact before user
 			user.getContactList().add(contact);

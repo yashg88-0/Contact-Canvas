@@ -72,7 +72,7 @@ const search = () => {
 		console.log(query);
 
 		//sending request to server
-		let url = `http://192.168.29.70:8448/search/${query}`;
+		let url = `http://localhost:8448/search/${query}`;
 		fetch(url).then((response) => {
 			return response.json();
 		}).then(data => {

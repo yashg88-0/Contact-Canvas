@@ -19,6 +19,14 @@
 							<div th:text=${message.content}></div>
 						</div>
 					</div>
+					
+					<div th:if="${con_number}"
+						class="container col-md-8 offset-md-2">
+						<div th:classappend="${'alert-'+con_number.type}"
+							class="alert text-center" role="alert">
+							<div th:text=${con_number.content}></div>
+						</div>
+					</div>
 					<!-- End of Alert messages -->
 					<div class="container-fluid">
 						<div class="row">
