@@ -46,6 +46,7 @@
             z-index: -1; /* Place the overlay behind the content */
         }
     </style> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -88,8 +89,8 @@
 			class="material-symbols-outlined">contacts</span> View Your Contacts
 		</a> <a href="#" th:href="@{/user/add-contact}" class="item"> <span
 			class="material-symbols-outlined">person_add</span> Add Your Contacts
-		</a> <a href="#" class="item"> <span class="material-symbols-outlined">manufacturing</span>
-			Settings
+		</a> <a href="#" th:href="@{/user/change-password}" class="item"> <span class="material-symbols-outlined">manufacturing</span>
+			Change Password
 		</a> <a href="#" th:href="@{/logout}" class="item"> <span
 			class="material-symbols-outlined">logout</span> Logout
 		</a>

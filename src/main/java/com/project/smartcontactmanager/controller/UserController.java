@@ -10,17 +10,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.apache.logging.log4j.message.StringFormattedMessage;
-import org.springframework.aot.hint.support.FilePatternResourceHintsRegistrar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +45,9 @@ public class UserController {
 	@Autowired
 	private ContactRepository contactRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 	@ModelAttribute
 	public void commonDataMethod(Model model, Principal principal) {
 		String name = principal.getName();
@@ -71,14 +71,14 @@ public class UserController {
 	// Add contacts
 	@PostMapping("/process-contact")
 	public String processContact(@Valid @ModelAttribute Contact contact,
-			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model, 
+			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model,
 			@RequestParam("contact_number") String number) {
 		try {
 			String name = principal.getName();
 			User user = userRepository.getUserByUserName(name);
 			contact.setUser(user);
-			
-			//setting the unique name of image
+
+			// setting the unique name of image
 			String uniqueID = UUID.randomUUID().toString();
 
 			// Upload file in image column
@@ -86,30 +86,28 @@ public class UserController {
 				System.out.println("File is empty");
 				contact.setImage("person.png");
 			} else {
-				//setting the new name of image
+				// setting the new name of image
 				String oldFileName = multipartFile.getOriginalFilename();
 				String extension = oldFileName.substring(oldFileName.lastIndexOf("."));
-				String newFileName = uniqueID +"_"+oldFileName;
-				System.out.println("NEW FILE NAME: "+newFileName+" EXTENSION: "+extension);
-				
+				String newFileName = uniqueID + "_" + oldFileName;
+				System.out.println("NEW FILE NAME: " + newFileName + " EXTENSION: " + extension);
+
 				// update new image
 				contact.setImage(newFileName);
 
 				File saveFile = new ClassPathResource("static/images").getFile();
-				Path path = Paths
-						.get(saveFile.getAbsolutePath() + File.separator + newFileName);
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + newFileName);
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			}
-			
-			//check for multiple contact
+
+			// check for multiple contact
 			List<Contact> contactListByUser = contactRepository.getContactListByUser(user.getId());
-			for(Contact c : contactListByUser) {
-				if(c.getContact_number().equals(number)) {
+			for (Contact c : contactListByUser) {
+				if (c.getContact_number().equals(number)) {
 					model.addAttribute("con_number", new Message("Number is already exist!!", "danger"));
 					return "User/add_contact";
 				}
 			}
-
 
 			contactRepository.save(contact);// need to first save the contact before user
 			user.getContactList().add(contact);
@@ -204,7 +202,7 @@ public class UserController {
 	public String updateContact(@ModelAttribute Contact contact,
 			@RequestParam("profileImage") MultipartFile multipartFile, Principal principal, Model model) {
 		try {
-			//setting the unique name of image
+			// setting the unique name of image
 			String uniqueID = UUID.randomUUID().toString();
 			// fetching oldContactDetails
 			Contact oldContact = contactRepository.findById(contact.getContact_id()).get();
@@ -214,18 +212,17 @@ public class UserController {
 				File deleteFile = new ClassPathResource("static/images").getFile();
 				File file = new File(deleteFile, oldContact.getImage());
 				file.delete();
-				
-				//setting the new name of image
+
+				// setting the new name of image
 				String oldFileName = multipartFile.getOriginalFilename();
 				String extension = oldFileName.substring(oldFileName.lastIndexOf("."));
-				String newFileName = uniqueID +"_"+oldFileName;
-				System.out.println("NEW FILE NAME: "+newFileName+" EXTENSION: "+extension);
-				
+				String newFileName = uniqueID + "_" + oldFileName;
+				System.out.println("NEW FILE NAME: " + newFileName + " EXTENSION: " + extension);
+
 				// update new image
 				contact.setImage(newFileName);
 				File saveFile = new ClassPathResource("static/images").getFile();
-				Path path = Paths
-						.get(saveFile.getAbsolutePath() + File.separator + newFileName);
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + newFileName);
 				Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 			} else {
 				contact.setImage(oldContact.getImage());
@@ -240,16 +237,49 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/user/contact/"+contact.getContact_id();
+		return "redirect:/user/contact/" + contact.getContact_id();
 	}
-	
-	//User Profile
+
+	// User Profile
 	@GetMapping("/profile/{name}")
 	public String userProfile(@PathVariable("name") String name, Model model, Principal principal) {
 		String userName = principal.getName();
 		User user = userRepository.getUserByUserName(userName);
-		model.addAttribute("title", user.getName().trim()+"\'s Profile Page");
+		model.addAttribute("title", user.getName().trim() + "\'s Profile Page");
 		model.addAttribute("name", user);
 		return "User/userProfile";
+	}
+	
+	@GetMapping("/change-password")
+	public String changePassword() {
+		return "User/change_password";
+	}
+
+	// Change Password
+	@PostMapping("/change-password")
+	public String userSettings(@RequestParam("oldPassword") String oldPassword, 
+			@RequestParam("newPassword") String newPassword, 
+			@RequestParam("newPassword2") String newPassword2,
+			Principal principal, Model model) {
+		
+		String username = principal.getName();
+		User user = userRepository.getUserByUserName(username);
+		//matching OLD Password
+		if (user == null || !bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+			System.err.println("Password doesnot matched");
+			model.addAttribute("message", new Message("Old Password is incorrect", "danger"));
+			return "/User/change_password";
+		}
+		//matching NEW Passwords
+		if(!newPassword.equals(newPassword2)) {
+			System.out.println("New Passwords does not matched");
+			model.addAttribute("message", new Message("Your new password is not Matching", "danger"));
+			return "/User/change_password";
+		}
+		//save NEW Password
+		user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+		userRepository.save(user);
+		model.addAttribute("message", new Message("Your password is succesfully changed", "success"));
+		return "/User/change_password";
 	}
 }
